@@ -1,0 +1,206 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    text-decoration: none;
+    list-style: none;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: content-box;
+}
+
+header, footer{
+    background-color: #4682b4;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+#submitBusca{
+    width: 10px;
+    height: 10px;
+}
+
+#nav-bar{
+    background-color: #4682b4;
+    cursor: pointer;
+    position: absolute;
+    right: 30px;
+    top: 70px;
+}
+
+#qntdFiltros{
+    background-color: #f0f0f0;
+    color: #4682b4;
+    position: absolute;
+    top: 15px;
+    left: 18px;
+    width: 20px;
+    height: 20px;
+    align-items: center;
+    text-align: center;
+    border-radius: 50%;
+}
+
+ul{
+    display: grid;
+    grid-template-columns: 2;
+
+    gap: 20px;
+    padding-top: 20px;
+    justify-content: center;
+}
+
+li {
+    width: 100ch;
+    height: 28ch;
+    text-align: justify;
+    display: flex;
+    flex-direction: row;
+}
+li hr {
+    padding: 10px;
+}
+li .conteudo{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+li .conteudo h2 {
+    padding-top: 0px;
+    padding-bottom: 5px;
+}
+
+li .conteudo p {
+    padding-bottom: 10px;
+    text-align: justify;
+}
+
+.subConteudo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+li button {
+    width: 40ch;
+    height: 2ch;
+    margin: 0 auto; 
+
+    font-size: 18px;
+    padding: 5px;
+    background-color: #4682b4;
+    color: white;
+    border-color: transparent;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.noticia-li button:hover{
+    transform: scale(1.1);
+    transition: 0.3s ease;
+}
+
+li img {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    width: 35ch;
+    height: 24ch;
+}
+
+/* --------- dialog style  ------------------*/
+#dialog-filtro {
+    width: 70ch;
+    height: 25ch;
+    background-color:#d2d2d2;
+    border: none;
+    border-radius: .5rem;
+    box-shadow: 0 0 1em (0 0  / .3);
+    margin: auto;
+}
+
+dialog form {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+.flex-column-top{
+    padding-top: 30px;
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    gap: 30px;
+    padding-bottom: 15px;
+}
+.flex-column-botton{
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    gap: 30px;
+    padding-bottom: 20px;
+}
+.filtro{
+    display: flex;
+    flex-direction: column;
+}
+
+.bottonAplicar{
+    width: 440px;
+    margin: 0 auto;
+    padding: 8px;
+    background-color:#4682b4;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+select {
+    width: 200px;
+    height: 20px;
+    padding: 5px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+input {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    width: 200px;
+    height: 20px;
+    padding: 5px;
+}
+
+#closeDialog{
+    position: absolute;
+    right: 10px;
+    background-color: transparent;
+    border: transparent;
+    padding: 15px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#paginacao-ul{
+    display: flex;
+    padding: 50px;
+}
+
+#paginacao-ul li {
+    width: 40px;
+    height: 30px;   
+}
+
+#paginacao-ul button {
+    background-color: white;
+    color: #4682b4;
+    border: 3px solid #4682b4;
+    align-items: center;
+    font-weight: 600;
+}
+#paginacao-ul button.active {
+    background-color: #4682b4;
+    color: white;
+    background-repeat: no-repeat;
+}
+

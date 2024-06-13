@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./script.js" defer></script>
+</head>
+<body>
+
+    <header id="header">
+        <h1>Portal de Notícias do IBGE</h1>
+        <div class="inputBuscar">
+            <form action="">
+                <input type="text" name="" id="textBusca" placeholder="Buscar notícia por: ">
+                <button id="submitBusca">🔍</button>
+            </form>
+        </div>
+    </header>
+
+    <nav id="nav-bar">
+            <svg width="25" height="25" fill="#f0f0f0" viewBox="0 0 80 90" focusable="false"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="m 0,0 30,45 0,30 10,15 0,-45 30,-45 Z"></path>
+            </svg>
+            <p id="qntdFiltros">1</p>
+    </nav>
+
+    <main id="main">
+
+        <section id="section-noticias">
+
+            <ul class="noticias-ul" id="noticias-ul"></ul>
+
+        </section>
+
+        <section id="section-paginacao">
+
+            <ul class="pagination" id="paginacao-ul"></ul>
+                
+        </section>
+
+    </main>
+
+    <footer id="footer">
+        <p>&copy 2024 Prova de Programação Web</p>
+    </footer>
+    <dialog id="dialog-filtro">
+
+        <div class="dialog-filtro">
+            <button id="closeDialog"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+            
+            <form onsubmit="aplicarFilros(event)">
+    
+                <div class="flex-column-top">
+                    <div class="filtro">
+                    <label for="filtro-tipo">Tipo:</label>
+                        <select class="input-dialog" id="filtro-tipo">
+                            <option value="">Selecione:</option>
+                            <option value="noticia">Notícia</option>
+                            <option value="release">Release</option>
+                        </select>
+                    </div>
+                    <div class="filtro">
+                        <label for="filtro-quantidade">Quantidade:</label>
+                        <select class="input-dialog" id="filtro-quantidade">
+                            <option selected value="10">10 Notícias</option>
+                            <option value="15">15 Notícias</option>
+                            <option value="20">20 Notícias</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex-column-botton">
+                    <div class="filtro">
+                            <label for="filtro-de">De:</label>
+                            <input class="input-dialog" type="date" id="filtro-de">
+                    </div>
+                    <div class="filtro">
+                            <label for="filtro-ate">Até:</label>
+                            <input class="input-dialog" type="date" id="filtro-ate">
+                 
+                    </div>
+                 </div>
+                 <button type="submit" class="bottonAplicar" id="botao-filtro">Aplicar</button>
+            </form>
+        </div>     
+    </dialog>
+</body>
+</html>
