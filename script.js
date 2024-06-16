@@ -18,19 +18,61 @@ buttonCloseDialog.onclick = function() {
     modal.close();
 };
 
+function aplicarFilros(event) {
+    event.preventDefault();
+
+    const filtroQuantidade = document.getElementById('filtro-quantidade').value;
+    const filtroTipo = document.getElementById('filtro-tipo').value;
+    const dateDe = document.getElementById('filtro-de').value;
+    const dateAte = document.getElementById('filtro-ate').value;
+    const inputBusca = document.getElementById('textBusca').value;
+
+    const url = new URL(window.location.href);
+    url.searchParams.set('qtd', filtroQuantidade);
+    url.searchParams.set('tipo', filtroTipo);
+    url.searchParams.set('de', dateDe);
+    url.searchParams.set('ate', dateAte);
+    url.searchParams.set('busca', inputBusca);
+
+    window.history.replaceState({}, '', url);
+    contarFiltrosAtivos();
+    logNoticias();
+
+    modal.close();
+}
+
 async function logNoticias() {
-    const endpoint = `https://servicodados.ibge.gov.br/api/v3/noticias${window.location.search}`;
-    console.log(endpoint);
+    const url = new URL('https://servicodados.ibge.gov.br/api/v3/noticias');
+    url.search = window.location.search;
+
     try {
-        const response = await fetch(endpoint);
+        const response = await fetch(url.toString());
         const noticias = await response.json();
-        console.log(noticias);
         displayNoticias(noticias.items);
         addPages(noticias.totalPages, noticias.page);
     } catch (error) {
         console.error('Erro ao buscar notícias:', error);
     }
 }
+
+function calcularTempoDecorrido(dataPublicacao) {
+    const dataPublicacaoObj = new Date(dataPublicacao);
+    const agora = new Date();
+    const diffEmMilissegundos = agora - dataPublicacaoObj;
+    const diffEmDias = Math.floor(diffEmMilissegundos / (1000 * 60 * 60 * 24));
+
+    if (diffEmDias === 0) {
+        return 'Publicado hoje';
+    } else if (diffEmDias === 1) {
+        return 'Publicado ontem';
+    } else {
+        return `Publicado há ${diffEmDias} dias`;
+    }
+}
+
+const dataPublicacao = '2024-06-15T12:00:00Z';
+const tempoDecorrido = calcularTempoDecorrido(dataPublicacao);
+console.log(tempoDecorrido);
 
 function filtros() {
     const url = new URL(window.location);
@@ -41,12 +83,12 @@ function filtros() {
     dateAte.value = url.searchParams.get('ate') ?? '';
     url.searchParams.set('qtd', filtroQuantidade.value);
     url.searchParams.set('page', url.searchParams.get('page') ?? '1');
-    window.history.replaceState({}, '', url);  // Use replaceState em vez de pushState para inicializar a URL sem criar um novo histórico
+    window.history.replaceState({}, '', url);
 }
 
 function displayNoticias(noticias) {
     const novaNoticia = document.getElementById('noticias-ul');
-    novaNoticia.innerHTML = ''; // Limpar lista de notícias
+    novaNoticia.innerHTML = '';
 
     noticias.forEach(noticia => {
         const noticias_li = document.createElement('li');
@@ -76,7 +118,8 @@ function displayNoticias(noticias) {
         introducaoNoticia.textContent = noticia.introducao;
 
         const dataPublicacao = document.createElement('p');
-        dataPublicacao.innerHTML = `<strong>${noticia.data_publicacao.split(' ')[0]}</strong>`;
+        const tempoDecorrido = calcularTempoDecorrido(noticia.data_publicacao);
+        dataPublicacao.innerHTML = `<strong>${tempoDecorrido}</strong>`;
 
         const editorasAplicadas = document.createElement('p');
         editorasAplicadas.innerHTML = `<strong>#${noticia.editorias}</strong>`;
@@ -132,21 +175,7 @@ function criarPagina(index) {
         </li>
     `;
 }
-/* const pageButton = document.getElementById('pagina')
-let link = document.getElementsByClassName('pagina-ativa');
-let pageValue = 1;
 
-function activeLink(){
-    for (l of link){
-        l.classList.remove('active')
-    }
-    event.target.classList.add("active")
-    pageValue = event.target.value;
-}
-
-pageButton.addEventListener('click', () => {
-    activeLink();
-}) */
 function changePage(element) {
     const url = new URL(window.location);
     url.searchParams.set('page', element.textContent);
@@ -155,8 +184,33 @@ function changePage(element) {
     logNoticias();
 }
 
-// Chama a função para configurar filtros e buscar notícias quando a página carrega
+function realizarBusca(event) {
+    event.preventDefault();
+
+    const termoBusca = document.getElementById('textBusca').value.trim();
+
+    const url = new URL(window.location.href);
+    url.searchParams.set('busca', termoBusca);
+    window.history.replaceState({}, '', url);
+
+    logNoticias();
+}
+
+function contarFiltrosAtivos() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let count = 0;
+
+    for (const param of urlParams.keys()) {
+        if (param !== 'page' && param !== 'busca') {
+            count++;
+        }
+    }
+
+    document.getElementById('qntdFiltros').textContent = count;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     filtros();
+    contarFiltrosAtivos();
     logNoticias();
 });
